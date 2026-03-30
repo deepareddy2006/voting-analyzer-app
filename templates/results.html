@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voting Results</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <!-- Logged-in admin -->
+    <p style="text-align:center; margin-bottom:15px;">
+        Logged in as: {{ username }} | <a href="/logout">Logout</a>
+    </p>
+
+    <h1>Voting Results</h1>
+
+    <!-- Region filter dropdown -->
+    <form method="post" style="text-align:center; margin-bottom:20px;">
+        <label>Select Region:</label>
+        <select name="region" onchange="this.form.submit()">
+            {% for region in regions %}
+                <option value="{{ region }}" {% if region==selected_region %}selected{% endif %}>{{ region }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <!-- Vote Counts -->
+    <h2>Vote Count</h2>
+    <ul>
+        {% for candidate, count in vote_count.items() %}
+            <li>{{ candidate }} : {{ count }} votes</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Vote Percentages -->
+    <h2>Vote Percentages</h2>
+    <ul>
+        {% for candidate, percent in percentages.items() %}
+            <li>{{ candidate }} : {{ "%.2f"|format(percent) }}%</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Charts -->
+    <h2>Charts</h2>
+    <canvas id="barChart" style="max-width:700px; margin:auto;"></canvas>
+    <canvas id="pieChart" style="max-width:700px; margin:30px auto;"></canvas>
+
+    <!-- Upload another file -->
+    <p style="text-align:center; margin-top:20px;">
+        <a href="/upload">Upload Another File</a>
+    </p>
+</div>
+
+<script>
+    // Convert Python dicts to JavaScript arrays using tojson
+    const labels = {{ vote_count.keys()|list|tojson }};
+    const dataCounts = {{ vote_count.values()|list|tojson }};
+    const dataPercent = {{ percentages.values()|list|tojson }};
+
+    // Bar Chart
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Vote Count',
+                data: dataCounts,
+                backgroundColor: ['#4CAF50','#2196F3','#FF9800','#E91E63'],
+                borderColor: ['#388E3C','#1976D2','#F57C00','#C2185B'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Votes per Candidate' }
+            },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // Pie Chart
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Vote Percentage',
+                data: dataPercent,
+                backgroundColor: ['#4CAF50','#2196F3','#FF9800','#E91E63'],
+                borderColor: '#fff',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { title: { display: true, text: 'Vote Percentage' } }
+        }
+    });
+</script>
+</body>
+</html>

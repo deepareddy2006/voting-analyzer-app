@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Voting CSV</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <!-- Show logged-in admin -->
+    <p style="text-align:center; margin-bottom:15px;">
+        Logged in as: {{ username }} | <a href="/logout">Logout</a>
+    </p>
+
+    <h1>Upload Voting CSV</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required><br><br>
+        <button type="submit">Upload File</button>
+    </form>
+</div>
+</body>
+</html>
