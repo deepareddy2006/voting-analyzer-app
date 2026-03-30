@@ -1,77 +1,97 @@
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #74ebd5, #9face6);
+/* Universal Styles */
+body, html {
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100%;
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #fff;
 }
 
+/* Gradient animation */
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+/* Container */
 .container {
-    width: 80%;
-    max-width: 800px;
-    margin: 40px auto;
-    background: white;
+    max-width: 900px;
+    margin: 50px auto;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-}
-
-h1 {
+    background: rgba(0,0,0,0.5);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     text-align: center;
-    color: #333;
 }
 
-h2 {
-    color: #555;
+/* Headings */
+h1, h2, h3 {
+    margin: 10px 0;
+    color: #fff;
+    text-shadow: 1px 1px 5px #000;
 }
 
-a {
+/* Buttons */
+.btn {
+    padding: 12px 30px;
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
     text-decoration: none;
-    color: white;
-    background: #4CAF50;
-    padding: 10px 15px;
-    border-radius: 5px;
+    border-radius: 12px;
+    transition: 0.3s;
+    display: inline-block;
 }
 
-a:hover {
-    background: #45a049;
+.btn.home { background: #4caf50; }
+.btn.back { background: #ff5722; }
+.btn:hover { transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-form {
+table th, table td {
+    padding: 12px 15px;
     text-align: center;
-    margin-top: 20px;
 }
 
+table th {
+    background: rgba(0,0,0,0.4);
+    font-size: 18px;
+}
+
+table tr:nth-child(even) {
+    background: rgba(255,255,255,0.05);
+}
+
+/* File upload button */
 input[type="file"] {
     padding: 10px;
-}
-
-button {
-    padding: 10px 20px;
-    background: #2196F3;
-    border: none;
-    color: white;
-    border-radius: 5px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
+}
+input[type="file"]:hover {
+    background: rgba(255,255,255,0.4);
+    transform: scale(1.05);
 }
 
-button:hover {
-    background: #0b7dda;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    padding: 8px;
-    background: #f2f2f2;
-    margin: 5px 0;
-    border-radius: 5px;
-}
-
-img {
-    display: block;
+/* Responsive charts */
+#chart, #bar-chart {
     margin: 20px auto;
-    max-width: 100%;
 }
